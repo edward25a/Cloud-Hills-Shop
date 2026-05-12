@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Hills Shop | Tienda Online</title>
+    <meta
+      name="description"
+      content="Catálogo online de ropa Cloud Hills Shop: secciones, precios, tallas y pedidos por WhatsApp."
+    />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Cloud Hills Shop inicio">
+        <span class="brand-mark">CH</span>
+        <span>
+          <strong>Cloud Hills Shop</strong>
+          <small>Ropa & accesorios</small>
+        </span>
+      </a>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#novedades">Novedades</a>
+        <a href="#pedido">Pedido</a>
+      </nav>
+
+      <button class="cart-button" type="button" data-open-cart aria-label="Abrir pedido">
+        <i data-lucide="shopping-bag"></i>
+        <span data-cart-count>0</span>
+      </button>
+    </header>
+
+    <main id="inicio">
+      <section class="store-hero" aria-labelledby="hero-title">
+        <div class="hero-content">
+          <p class="eyebrow">Colecciones listas para pedir</p>
+          <h1 id="hero-title">Cloud Hills Shop</h1>
+          <p>
+            Prendas casuales, outfits para salir y básicos de temporada con precios claros y pedido directo.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#catalogo">Ver catálogo</a>
+            <a class="secondary-action" href="https://www.instagram.com/cloudhillsshopp2019" target="_blank" rel="noreferrer">
+              Instagram
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-strip" id="novedades" aria-label="Resumen de secciones">
+        <article>
+          <span>01</span>
+          <strong>Nuevos ingresos</strong>
+          <p>Looks frescos para renovar vitrinas y publicaciones.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <strong>Pedido rápido</strong>
+          <p>El cliente arma su selección y envía el detalle por WhatsApp.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <strong>Por secciones</strong>
+          <p>Blusas, vestidos, jeans, conjuntos, accesorios y ofertas.</p>
+        </article>
+      </section>
+
+      <section class="catalog-shell" id="catalogo" aria-labelledby="catalog-title">
+        <div class="catalog-heading">
+          <div>
+            <p class="eyebrow">Catálogo</p>
+            <h2 id="catalog-title">Compra por sección</h2>
+          </div>
+          <div class="catalog-tools">
+            <label class="search-box">
+              <i data-lucide="search"></i>
+              <input type="search" id="searchInput" placeholder="Buscar prenda" autocomplete="off" />
+            </label>
+            <select id="sortSelect" aria-label="Ordenar productos">
+              <option value="featured">Destacados</option>
+              <option value="priceAsc">Precio: menor a mayor</option>
+              <option value="priceDesc">Precio: mayor a menor</option>
+              <option value="new">Nuevos primero</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="category-tabs" role="tablist" aria-label="Filtrar por sección">
+          <button class="active" type="button" data-category="all">Todo</button>
+          <button type="button" data-category="blusas">Blusas</button>
+          <button type="button" data-category="vestidos">Vestidos</button>
+          <button type="button" data-category="jeans">Jeans</button>
+          <button type="button" data-category="conjuntos">Conjuntos</button>
+          <button type="button" data-category="accesorios">Accesorios</button>
+          <button type="button" data-category="ofertas">Ofertas</button>
+        </div>
+
+        <div class="catalog-layout">
+          <aside class="filter-panel" aria-label="Filtros del catálogo">
+            <div class="filter-block">
+              <label for="priceRange">Precio máximo</label>
+              <div class="range-row">
+                <input type="range" id="priceRange" min="10" max="75" value="75" />
+                <output id="priceOutput" for="priceRange">$75</output>
+              </div>
+            </div>
+
+            <div class="filter-block">
+              <span>Talla</span>
+              <div class="size-grid" data-size-options>
+                <button class="active" type="button" data-size="all">Todas</button>
+                <button type="button" data-size="S">S</button>
+                <button type="button" data-size="M">M</button>
+                <button type="button" data-size="L">L</button>
+                <button type="button" data-size="XL">XL</button>
+              </div>
+            </div>
+
+            <div class="filter-block">
+              <span>Disponibilidad</span>
+              <label class="toggle-line">
+                <input type="checkbox" id="stockOnly" checked />
+                <span>Solo disponibles</span>
+              </label>
+            </div>
+          </aside>
+
+          <div>
+            <div class="result-meta">
+              <span id="resultCount">0 productos</span>
+              <button type="button" id="clearFilters">Limpiar filtros</button>
+            </div>
+            <div class="product-grid" id="productGrid" aria-live="polite"></div>
+            <p class="empty-state" id="emptyState" hidden>No hay productos con esos filtros.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="order-band" id="pedido" aria-labelledby="order-title">
+        <div>
+          <p class="eyebrow">Pedido</p>
+          <h2 id="order-title">Atención directa por WhatsApp</h2>
+          <p>
+            Cada producto agregado queda en una lista con talla, precio y cantidad para enviar el mensaje armado.
+          </p>
+        </div>
+        <button class="primary-action" type="button" data-open-cart>Ver pedido</button>
+      </section>
+    </main>
+
+    <dialog class="product-modal" id="productModal">
+      <button class="icon-button modal-close" type="button" data-close-modal aria-label="Cerrar detalle">
+        <i data-lucide="x"></i>
+      </button>
+      <div class="modal-body" id="modalBody"></div>
+    </dialog>
+
+    <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Pedido actual">
+      <div class="cart-header">
+        <div>
+          <p class="eyebrow">Pedido</p>
+          <h2>Tu selección</h2>
+        </div>
+        <button class="icon-button" type="button" data-close-cart aria-label="Cerrar pedido">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-footer">
+        <form class="checkout-form" id="checkoutForm">
+          <label>
+            Nombre
+            <input type="text" id="customerName" placeholder="Nombre del cliente" required />
+          </label>
+          <label>
+            WhatsApp
+            <input type="tel" id="customerPhone" placeholder="Ej: 6000-0000" required />
+          </label>
+          <label>
+            Nota del pedido
+            <textarea id="customerNote" rows="3" placeholder="Color, entrega, referencia o comentario"></textarea>
+          </label>
+          <button class="firebase-action" id="firebaseOrderButton" type="submit">Enviar pedido a la tienda</button>
+          <p class="status-line" id="firebaseOrderStatus">Configura Firebase para recibir pedidos en vivo.</p>
+        </form>
+        <div class="cart-total">
+          <span>Total estimado</span>
+          <strong id="cartTotal">$0.00</strong>
+        </div>
+        <a class="whatsapp-action" id="whatsappLink" target="_blank" rel="noreferrer">Pedir por WhatsApp</a>
+        <button class="text-button" type="button" id="clearCart">Vaciar pedido</button>
+      </div>
+    </aside>
+    <div class="scrim" id="scrim" hidden></div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

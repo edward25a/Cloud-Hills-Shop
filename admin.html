@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel del Dueño | Cloud Hills Shop</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body class="admin-page">
+    <main class="admin-shell">
+      <section class="owner-login" id="loginView" aria-labelledby="login-title">
+        <div class="login-card">
+          <a class="brand" href="index.html">
+            <span class="brand-mark">CH</span>
+            <span>
+              <strong>Cloud Hills Shop</strong>
+              <small>Panel privado</small>
+            </span>
+          </a>
+          <div>
+            <p class="eyebrow">Acceso dueño</p>
+            <h1 id="login-title">Administrar catálogo</h1>
+            <p>Entra para subir ropa, cambiar precios, editar tallas y controlar disponibilidad.</p>
+          </div>
+          <form id="loginForm" class="owner-form">
+            <label>
+              Clave de dueño
+              <input type="password" id="ownerPassword" placeholder="Escribe la clave" autocomplete="current-password" required />
+            </label>
+            <button class="primary-action" type="submit">Entrar</button>
+            <p class="form-note" id="loginError" hidden>Clave incorrecta.</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="owner-dashboard" id="dashboardView" hidden>
+        <header class="admin-header">
+          <a class="brand" href="index.html">
+            <span class="brand-mark">CH</span>
+            <span>
+              <strong>Cloud Hills Shop</strong>
+              <small>Panel del dueño</small>
+            </span>
+          </a>
+          <div class="admin-actions">
+            <a class="secondary-admin" href="index.html" target="_blank">Ver tienda</a>
+            <button class="text-button" type="button" id="logoutButton">Salir</button>
+          </div>
+        </header>
+
+        <div class="dashboard-grid">
+          <section class="editor-panel" aria-labelledby="editor-title">
+            <div class="panel-title">
+              <div>
+                <p class="eyebrow">Producto</p>
+                <h2 id="editor-title">Agregar prenda</h2>
+              </div>
+              <button class="text-button" type="button" id="newProductButton">Nuevo</button>
+            </div>
+
+            <form id="productForm" class="product-editor">
+              <input type="hidden" id="productId" />
+              <label>
+                Nombre de la prenda
+                <input type="text" id="productName" placeholder="Ej: Vestido floral" required />
+              </label>
+
+              <div class="form-grid">
+                <label>
+                  Sección
+                  <select id="productCategory" required>
+                    <option value="blusas">Blusas</option>
+                    <option value="vestidos">Vestidos</option>
+                    <option value="jeans">Jeans</option>
+                    <option value="conjuntos">Conjuntos</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="ofertas">Ofertas</option>
+                  </select>
+                </label>
+                <label>
+                  Precio
+                  <input type="number" id="productPrice" min="0" step="0.01" placeholder="24.99" required />
+                </label>
+              </div>
+
+              <div class="form-grid">
+                <label>
+                  Tallas
+                  <input type="text" id="productSizes" placeholder="S, M, L" required />
+                </label>
+                <label>
+                  Stock
+                  <input type="number" id="productStock" min="0" step="1" placeholder="5" required />
+                </label>
+              </div>
+
+              <label>
+                Descripción
+                <textarea id="productDescription" rows="4" placeholder="Describe tela, estilo o uso recomendado" required></textarea>
+              </label>
+
+              <label>
+                Foto de la prenda
+                <input type="file" id="productImage" accept="image/*" />
+              </label>
+              <div class="image-preview" id="imagePreview">
+                <span>Vista previa</span>
+              </div>
+
+              <label class="toggle-line">
+                <input type="checkbox" id="productIsNew" />
+                <span>Marcar como nuevo ingreso</span>
+              </label>
+
+              <div class="editor-actions">
+                <button class="primary-action" type="submit">Guardar producto</button>
+                <button class="danger-button" type="button" id="deleteProductButton" hidden>Eliminar</button>
+              </div>
+              <p class="form-note" id="saveNote" hidden>Producto guardado.</p>
+            </form>
+          </section>
+
+          <section class="inventory-panel" aria-labelledby="inventory-title">
+            <div class="panel-title">
+              <div>
+                <p class="eyebrow">Catálogo</p>
+                <h2 id="inventory-title">Productos publicados</h2>
+              </div>
+              <span class="inventory-count" id="inventoryCount">0</span>
+            </div>
+            <div class="owner-products" id="ownerProducts"></div>
+          </section>
+        </div>
+
+        <section class="orders-panel" aria-labelledby="orders-title">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">En vivo</p>
+              <h2 id="orders-title">Pedidos recibidos</h2>
+            </div>
+            <span class="inventory-count" id="ordersCount">0</span>
+          </div>
+          <p class="form-note" id="ordersStatus">Configura Firebase para ver pedidos en vivo.</p>
+          <div class="orders-list" id="ordersList"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="firebase-config.js"></script>
+    <script src="admin.js"></script>
+  </body>
+</html>
