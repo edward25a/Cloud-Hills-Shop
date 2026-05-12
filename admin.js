@@ -143,6 +143,7 @@ const saveNote = document.querySelector("#saveNote");
 let products = loadProducts();
 let currentImage = "";
 let firebaseOrdersStarted = false;
+let firebaseOrdersApi = null;
 
 function loadProducts() {
   const savedProducts = localStorage.getItem(PRODUCTS_STORAGE_KEY);
@@ -201,6 +202,12 @@ async function initFirebaseOrdersPanel() {
     const app = appModule.initializeApp(window.firebaseConfig);
     const db = databaseModule.getDatabase(app);
     const pedidosRef = databaseModule.ref(db, "pedidos");
+    firebaseOrdersApi = {
+      db,
+      ref: databaseModule.ref,
+      update: databaseModule.update,
+      serverTimestamp: databaseModule.serverTimestamp
+    };
 
     ordersStatus.textContent = "Escuchando pedidos nuevos...";
 
@@ -210,8 +217,9 @@ async function initFirebaseOrdersPanel() {
         orders.push({ id: child.key, ...child.val() });
       });
 
-      orders.sort((a, b) => (b.creadoEn || 0) - (a.creadoEn || 0));
-      renderOrders(orders);
+      const pendingOrders = orders.filter((order) => order.estado !== "atendido");
+      pendingOrders.sort((a, b) => (b.creadoEn || 0) - (a.creadoEn || 0));
+      renderOrders(pendingOrders);
     });
   } catch (error) {
     ordersStatus.textContent = "No se pudo conectar Firebase. Revisa la configuración.";
@@ -311,10 +319,27 @@ function renderOrders(orders) {
               .join("")}
           </ul>
           ${order.cliente?.nota ? `<p><strong>Nota:</strong> ${order.cliente.nota}</p>` : ""}
+          <div class="order-actions">
+            <button type="button" data-complete-order="${order.id}">Marcar atendido</button>
+          </div>
         </article>
       `;
     })
     .join("");
+}
+
+async function completeOrder(orderId) {
+  if (!firebaseOrdersApi || !orderId) return;
+
+  try {
+    await firebaseOrdersApi.update(firebaseOrdersApi.ref(firebaseOrdersApi.db, `pedidos/${orderId}`), {
+      estado: "atendido",
+      atendidoEn: firebaseOrdersApi.serverTimestamp()
+    });
+  } catch (error) {
+    ordersStatus.textContent = "No se pudo marcar el pedido como atendido.";
+    console.error(error);
+  }
 }
 
 function editProduct(id) {
@@ -421,6 +446,11 @@ deleteProductButton.addEventListener("click", () => {
 ownerProducts.addEventListener("click", (event) => {
   const editButton = event.target.closest("[data-edit-product]");
   if (editButton) editProduct(editButton.dataset.editProduct);
+});
+
+ordersList.addEventListener("click", (event) => {
+  const completeButton = event.target.closest("[data-complete-order]");
+  if (completeButton) completeOrder(completeButton.dataset.completeOrder);
 });
 
 if (sessionStorage.getItem(OWNER_SESSION_KEY) === "true") {
